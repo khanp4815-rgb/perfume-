@@ -487,7 +487,7 @@ function renderList(){const L=$('list');L.innerHTML='';
       c.querySelector('.op').onclick=()=>{fill(b);go(1)};c.querySelector('.im').onclick=()=>slipImg(b.name||'—',b.date);
       c.querySelector('.dl').onclick=()=>{if(confirm('هي بل حذف ڪريو؟')){bills=bills.filter(x=>x!==b);store();renderList()}};
       g.appendChild(c)});L.appendChild(g)})}
-const APP_VER='2026.11.28e';
+const APP_VER='2026.11.28f';
 function saveGh(){let u=$('ghUrl').value.trim();const m=u.match(/^https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/blob\/([^\/]+)\/(.+)$/);if(m)u='https://raw.githubusercontent.com/'+m[1]+'/'+m[2]+'/'+m[3]+'/'+m[4];
   if(u&&!/^https:\/\//.test(u)){alert('لنڪ https:// سان شروع ٿيڻ گهرجي');return}
   try{if(u)localStorage.setItem('gh_url',u);else localStorage.removeItem('gh_url')}catch(e){}$('ghUrl').value=u;alert('لنڪ محفوظ ٿي ويو')}
@@ -498,6 +498,7 @@ function exportData(){const j=JSON.stringify({bills,S,items,custs,ws:wsheets});$
 function importData(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!confirm('موجوده رڪارڊ بدلجي ويندو. جاري رکون؟'))return;bills=d.bills||[];if(d.items)items=d.items;if(d.custs)custs=d.custs;if(d.ws)wsheets=d.ws;S=Object.assign(S,d.S||{});store();brand();newBill();renderList();alert('بحال ٿي ويو')}catch(e){alert('فائل غلط آهي')}};r.readAsText(f)}
 dlg=$('dlg');dlg2=$('dlg2');load();const _st=store;store=function(){_st();updTop()};brand();updTop();newBill();$('pd').value=today();
 
+try{if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0)navigator.serviceWorker.register('sw.js').catch(function(){})}catch(e){}
 /* ---- back navigation (button + phone back key) ---- */
 let hist=[1],hOK=true,silent=false,curTab=1;
 try{history.replaceState({x:1},'')}catch(e){hOK=false}
